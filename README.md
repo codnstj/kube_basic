@@ -90,5 +90,7 @@
 <img width="960" alt="Screen Shot 2022-08-13 at 12 16 59 AM" src="https://user-images.githubusercontent.com/69895368/184386500-5cd08a88-5f57-4048-b9b6-2746460d3584.png">
 
 
+### Service
 
+- Pod 은 자체 IP 를 가지고 다른 Pod 과 통신할 수 있지만, 쉽게 사라지고 생성되는 특징 때문에 직접 통신하는 방법은 권장하지 않습니다. 쿠버네티스는 Pod 과 직접 통신하는 방법대신, 별도의 고정된 IP 를 가진 서비스를 만들고 그 서비스를 통해 Pod 에 접근하는 방식을 사용합니다.
 
