@@ -65,11 +65,30 @@
 ### Deployment
 
 - Deployment 는 쿠버네티스에서 가장 널리 사용되는 오브젝트 이다. Replicset 을 이용하여 Pod 을 업데이트하고 이력을 관리하여 롤백하거나 특정버전으로 돌아갈수 있습니다.
-
+	> Pod 업데이트 
+	> 엄밀히 말하면 Pod 을 새로운 버전으로 업데이트 한다는 잘못된 표현이고 새로운 버전의 Pod 을 생성하고 기존의 Pod 을 제고한다가 가장 정확한 표현 입니다.
 - Deployment Replicaset Update
 	- Deployment 는 새로운 이미지를 업데이트하기 위해 ReplicaSet 을 이용합니다. 버전을 업데이트하면 새로운 Replicaset 을 생성하고 해당 ReplicaSet 이 새로운 버전의 Pod 을 생성합니다.
 	- ReplicaSet 을 업데이트 하는 과정은 Rolling 방식으로 배포됩니다.
 
-	> Pod 업데이트 
-	> 엄밀히 말하면 Pod 을 새로운 버전으로 업데이트 한다는 잘못된 표현이고 새로운 버전의 Pod 을 생성하고 기존의 Pod 을 제고한다가 가장 정확한 표현 입니다.
+
+	<img width="1012" alt="Screen Shot 2022-08-13 at 12 01 32 AM" src="https://user-images.githubusercontent.com/69895368/184383550-f1c39202-1fd4-4be1-9d7a-e8b06d7d2a5f.png">
+	
+	- 각 컨트롤러는 다음과 같이 동작합니다.
+	
+	<img width="643" alt="Screen Shot 2022-08-13 at 12 03 10 AM" src="https://user-images.githubusercontent.com/69895368/184383718-1f2a5d31-e868-4c96-b949-c298f5818c5e.png">
+	
+- Version 관리
+	- `kubectl rollout history` 를 통해 Deployment 의 버전 을 확인할수 있습니다.
+	- `kubectl rollout undo` 를 통해 Deployment 의 특정 버전으로 rollback 할수 있습니다.
+<img width="600" alt="Screen Shot 2022-08-13 at 12 05 21 AM" src="https://user-images.githubusercontent.com/69895368/184384154-394b7d3d-5e8f-4ea9-bfd4-d09c9dcac39a.png">
+
+- Strategy 설정
+<img width="187" alt="Screen Shot 2022-08-13 at 12 17 07 AM" src="https://user-images.githubusercontent.com/69895368/184386341-ff3f8509-09b1-4dd6-b930-b050dd83096e.png">
+
+- rolling 배포 형식으로 3개씩 POD 들이 생성됩니다.
+<img width="960" alt="Screen Shot 2022-08-13 at 12 16 59 AM" src="https://user-images.githubusercontent.com/69895368/184386500-5cd08a88-5f57-4048-b9b6-2746460d3584.png">
+
+
+
 
