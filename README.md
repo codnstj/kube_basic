@@ -28,3 +28,13 @@
 	- 컨테이너가 준비되었는지 체크하고 정상적으로 준비되지 않았다면 POD 으로 들어오는 요청을 제외합니다.
 
 	- LivenessProbe 와 차이점은 문제가 있어도 Pod 을 재시작하지 않고 요청만 제외한다는 점입니다
+
+### Multi Container
+
+- 대부분 `1 pod = 1 container` 지만 여러 개의 컨테이너를 가진 경우도 흔하다.
+
+- 하나의 Pod 에 속한 컨테이너는 서로 네트워크를 localhost 로 공유하고 동일한 디렉토리를 공유할수도 있습니다.
+
+> 다중 컨테이너 POD 구성도 
+![Multi-container](https://subicura.com/k8s/build/imgs/guide/pod/pod-multi.png)
+
