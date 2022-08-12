@@ -65,3 +65,11 @@
 ### Deployment
 
 - Deployment 는 쿠버네티스에서 가장 널리 사용되는 오브젝트 이다. Replicset 을 이용하여 Pod 을 업데이트하고 이력을 관리하여 롤백하거나 특정버전으로 돌아갈수 있습니다.
+
+- Deployment Replicaset Update
+	- Deployment 는 새로운 이미지를 업데이트하기 위해 ReplicaSet 을 이용합니다. 버전을 업데이트하면 새로운 Replicaset 을 생성하고 해당 ReplicaSet 이 새로운 버전의 Pod 을 생성합니다.
+	- ReplicaSet 을 업데이트 하는 과정은 Rolling 방식으로 배포됩니다.
+
+	> Pod 업데이트 
+	> 엄밀히 말하면 Pod 을 새로운 버전으로 업데이트 한다는 잘못된 표현이고 새로운 버전의 Pod 을 생성하고 기존의 Pod 을 제고한다가 가장 정확한 표현 입니다.
+
