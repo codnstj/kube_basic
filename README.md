@@ -42,6 +42,18 @@
 
 - pod 을 단독으로 만들면 pod 에 어떤 문제가 생겼을떄 자동으로 복구되지 않습니다. 이러한 pod 을 정해진 수만큼 복제하고 관리하는 것이 ReplicaSet 입니다.
 
-> Kind 를 ReplicaSet 으로 지정해주면 됩니다.
+- Kind 를 ReplicaSet 으로 지정해주면 됩니다.
 
+> ReplicaSet 구성도 
+![rs](https://subicura.com/k8s/build/imgs/guide/replicaset/rs.png)
+
+ - ReplicaSet 은 `labels을 체크` 해서 원하는수의 Pod 이 없으면 새로운 Pod 을 생성합니다. 이를 설정으로 표현하면 다음과 같습니다.
+
+ |정의|설명|
+ |--|--|
+ |`spec.selector`|label의 체크조건|
+ |`sepc.replicas`|원하는 Pod의 개수|
+ |`spec.template`|생성할 Pod의 명세|
+	 
+> ReplicaSet 동작 원리
 
