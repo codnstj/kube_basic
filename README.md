@@ -62,3 +62,6 @@
 - Scaleout
 	- ReplicaSet 을 이용하면 손쉽게 Pod 을 여러개로 복제할수 있습니다.
 		- spec: replicas:n
+### Deployment
+
+- Deployment 는 쿠버네티스에서 가장 널리 사용되는 오브젝트 이다. Replicset 을 이용하여 Pod 을 업데이트하고 이력을 관리하여 롤백하거나 특정버전으로 돌아갈수 있습니다.
