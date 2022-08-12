@@ -57,3 +57,4 @@
 	 
 > ReplicaSet 동작 원리
 
+<img width="606" alt="Screen Shot 2022-08-10 at 5 17 27 PM" src="https://user-images.githubusercontent.com/69895368/184362467-e53882b6-6410-405f-98c6-e7753220881e.png">
