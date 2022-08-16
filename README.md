@@ -94,3 +94,37 @@
 
 - Pod 은 자체 IP 를 가지고 다른 Pod 과 통신할 수 있지만, 쉽게 사라지고 생성되는 특징 때문에 직접 통신하는 방법은 권장하지 않습니다. 쿠버네티스는 Pod 과 직접 통신하는 방법대신, 별도의 고정된 IP 를 가진 서비스를 만들고 그 서비스를 통해 Pod 에 접근하는 방식을 사용합니다.
 
+- ClusterIP
+	- ClusterIP 는 클러스터 내부에 새로운 IP 를 할당하고 여러 개의 POD 을 바라보는 로드밸런서 기능을 제공합니다. 그리고 서비스 이름을 내부 도메인 서버에 등록하여 Pod 간에 서비스 이름으로 통신할수 있습니다.
+	> ### 구분자 
+	> 하나의 YAML 파일에 여러 개의 리소스를 정의할 떈 "---"를 구분자로 사용합니다.
+
+- ***Example***
+
+	- redis Deployment 와 Service 생성 (./service/counter-redis-svc.yaml) 
+	![redis-service](https://subicura.com/k8s/build/imgs/guide/service/clusterip.png)
+
+	- 같은 클러스터에 생성된 Pod 이라면 `redis` 라는 도메인으로 redis Pod에 접근할 수 있습니다.
+	(`redis.default.svc.cluster.local` 로도 접근이 가능합니다. 서로 다른 namespace 와 cluster 를 구분할수 있습니다.)
+
+	- ClusterIP 서비스 설정
+		|정의|설명|
+		|--|--|
+		|`spec.ports.port`|서비스가 생성할 Port|
+		|`spec.ports.targetPort`|서비스가 접근할 Pod 의 Port (Default: port 랑 동일)
+		|`spec.selector`| 서비스가 접근할 Pod 의 Label 조건|
+
+		redis Service 의 Selector 는 redis Deployment에 정의한 Label 을 사용했기 때문에 해당 Pod 을 가리킵니다. 그리고 해당 Pod 의 6379 포트의 연결하였습니다.
+
+	- 앱에서 도메인으로 Redis ClusterIP 연결
+		- `spec.containers.env.REDIS_HOST` 를 `"redis"` 라는 도메인 이름을 사용하여 연결하였습니다.
+	
+- Service 생성 흐름
+	-  Service는 각 Pod를 바라보는 로드밸런서 역할을 하면서 내부 도메인서버에 새로운 도메인을 생성합니다. 
+	
+
+	- iptables
+		- iptables 는 커널 레벨의 네트워크 도구이고 `COREDNS` 는 빠르고 편리하게 사용할 수 있는 클러스터 내부용 도메인 네임 서버 입니다. 각각의 역할은 `iptables` 설정으로 여러 IP에 트래픽을 전달하고 `COREDNS` 를 이용하여 IP 대신 도메인 이름을 사용합니다.
+		> iptables 는 규칙이 많아지면 성능이 느려지는 이슈가 있어, ipvs 를 사용하는 옵션도 있습니다.
+
+		> COREDNS 는 클러스터에서 호환성을 위해 `kube-dns` 라는 이름으로 생성됩니다.
