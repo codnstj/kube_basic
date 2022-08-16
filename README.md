@@ -136,7 +136,9 @@
 - ClusterIP 는 클러스터 내부에서만 접근할 수 있습니다. 클러스터 외부(노드)에서 접근할수 있도록 NodePort 서비스를 생성해줍니다.
 
 - Example
-	
+
+	<img width="211" alt="Screen Shot 2022-08-16 at 5 49 04 PM" src="https://user-images.githubusercontent.com/69895368/184842122-6a8dba3b-a10e-4857-b94c-68fd56716fc4.png">
+
 	
 	
 	|정의|설명|
