@@ -122,6 +122,8 @@
 - Service 생성 흐름
 	-  Service는 각 Pod를 바라보는 로드밸런서 역할을 하면서 내부 도메인서버에 새로운 도메인을 생성합니다. 
 	
+	<img width="608" alt="Screen Shot 2022-08-16 at 5 08 20 PM" src="https://user-images.githubusercontent.com/69895368/184833214-7dffad9c-d0e8-4931-9b96-a4644f0733c2.png">
+
 
 	- iptables
 		- iptables 는 커널 레벨의 네트워크 도구이고 `COREDNS` 는 빠르고 편리하게 사용할 수 있는 클러스터 내부용 도메인 네임 서버 입니다. 각각의 역할은 `iptables` 설정으로 여러 IP에 트래픽을 전달하고 `COREDNS` 를 이용하여 IP 대신 도메인 이름을 사용합니다.
