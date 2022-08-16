@@ -154,3 +154,21 @@
 	![node2](https://subicura.com/k8s/build/imgs/guide/service/nodeport-multi.png)
 
 	> NodePort 는 기본적으로 ClusterIP 기능을 기본적으로 포함합니다.
+
+### LoadBalancer
+
+- nodeport 의 단점은 노드가 사라졌을 떄 자동으로 다른 노드를 통해 접근이 불가능하다는 점입니다. 예를 들어, 3개의 노드가 있다면 3개중에 아무 노드로 접근해도 NodePort 로 연결할 수 있지만 어떤 노드가 살아 있는지는 알수가 없습니다.
+
+![lb1](https://subicura.com/k8s/build/imgs/guide/service/lb.png)
+
+- 자동으로 살아 있는 노드에 접근하기 위해 모든 노드를 바라보는 `LoadBalancer` 가 필요합니다. 브라우저는 NodePort에 직접 요청을 보내는것이 아니라 LoadBalancer 에 요청하고 LoadBalancer 가 알아서 살아있는 노드에 접근하면 NodePort 의 단점을 없앨 수 있습니다.
+
+- Example 
+
+	- counterlb가 생성되었지만, EXTERNAL-IP가 <pending>인 것을 확인할 수 있습니다. 사실 Load Balancer는 AWS, Google Cloud, Azure 같은 클라우드 환경이 아니면 사용이 제한적입니다. 특정 서버(노드)를 가리키는 무언가(Load Balancer)가 필요한데 이런 무언가가 가상머신이나 로컬 서버에는 존재하지 않습니다.
+	- `minikube addons enable metallb` 를 통해 minikube 에 가상 로드밸런서를 생성해주겠습니다.
+	- `minikube addons configure metallb` 에 Start IP 와 End IP 모두 `minkube ip` 에서 나온 아이피를 등록해주면 됩니다.
+
+
+> `metallb` 는 로드밸런서를 사용할수 없는 환경에서 가상환경을 만들어 주는 것이 `metallb` 라는 것입니다. minikube 에서는 현재 떠있는 노드를 LoadBalancer 로 설정합니다.
+
