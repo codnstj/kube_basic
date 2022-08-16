@@ -130,3 +130,25 @@
 		> iptables 는 규칙이 많아지면 성능이 느려지는 이슈가 있어, ipvs 를 사용하는 옵션도 있습니다.
 
 		> COREDNS 는 클러스터에서 호환성을 위해 `kube-dns` 라는 이름으로 생성됩니다.
+
+### NodePort 만들기
+
+- ClusterIP 는 클러스터 내부에서만 접근할 수 있습니다. 클러스터 외부(노드)에서 접근할수 있도록 NodePort 서비스를 생성해줍니다.
+
+- Example
+	
+	
+	
+	|정의|설명|
+	|--|--|
+	|`spec.ports.nodePort`|노드에 오픈할 Port(미지정시 30000 ~ 32768 중 자동할당)|
+
+	> Docker driver 를 사용중이라면 minikube service <서비스명> 명령어를 이용해서 접속해보자.
+
+	![node1](https://subicura.com/k8s/build/imgs/guide/service/nodeport.png)
+
+	- NodePort는 클러스터의 모든 노드에 포트를 오픈합니다. 지금은 테스트라서 하나의 노드밖에 없지만 여러 개의 노드가 있다면 아무 노드로 접근해도 지정한 Pod으로 쏘옥 접근할 수 있습니다.
+
+	![node2](https://subicura.com/k8s/build/imgs/guide/service/nodeport-multi.png)
+
+	> NodePort 는 기본적으로 ClusterIP 기능을 기본적으로 포함합니다.
