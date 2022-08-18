@@ -165,9 +165,13 @@
 
 - Example 
 
+	<img width="664" alt="Screen Shot 2022-08-17 at 1 55 16 AM" src="https://user-images.githubusercontent.com/69895368/184938107-d3e5de68-78d2-4549-b132-696b76283ff9.png">
+
 	- counterlb가 생성되었지만, EXTERNAL-IP가 <pending>인 것을 확인할 수 있습니다. 사실 Load Balancer는 AWS, Google Cloud, Azure 같은 클라우드 환경이 아니면 사용이 제한적입니다. 특정 서버(노드)를 가리키는 무언가(Load Balancer)가 필요한데 이런 무언가가 가상머신이나 로컬 서버에는 존재하지 않습니다.
 	- `minikube addons enable metallb` 를 통해 minikube 에 가상 로드밸런서를 생성해주겠습니다.
 	- `minikube addons configure metallb` 에 Start IP 와 End IP 모두 `minkube ip` 에서 나온 아이피를 등록해주면 됩니다.
+
+	<img width="670" alt="Screen Shot 2022-08-17 at 2 06 12 AM" src="https://user-images.githubusercontent.com/69895368/184938140-4be3ec75-6ca0-492c-b17f-9d19d0bdc40c.png">
 
 
 > `metallb` 는 로드밸런서를 사용할수 없는 환경에서 가상환경을 만들어 주는 것이 `metallb` 라는 것입니다. minikube 에서는 현재 떠있는 노드를 LoadBalancer 로 설정합니다.
