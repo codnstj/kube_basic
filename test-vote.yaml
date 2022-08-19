@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: deployment
+metadata:
+  name: worker
+spec:
+  selector:
+    matchLabels:
+      service: vote
+  template:
+    metatdata:
+      labels: vote
+spec:
+  containers:
+    - name: vote 
+      image: ghcr.io/subicura/voting/worker:latest
+      env:
+        - name: REDIS_HOST
+          value: "redis"
+        - name: 
+      
