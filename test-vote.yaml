@@ -77,3 +77,88 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: result
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      nodePort: 31001
+      protocol: TCP
+  selector:
+    service: result
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+spec:
+  selector:
+    matchLabels:
+      service: worker
+  templete:
+    metadata:
+      labels:
+        service: worker
+    spec:
+      containers:
+        - name: redis
+          image: redis
+          ports:
+            - containerPort: 6379
+              protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  ports:
+    - port: 6379
+      protocol: TCP
+  selector:
+    service: redis
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  selector: 
+    matchLabels:
+      service: db
+  template:
+    meatadata:
+      labels:
+        service: db
+    spec:
+      containers:
+        - name: db
+          image: postgre:9.4
+          env: 
+            - name: POSTGRE_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+          ports: 
+            - containerPort: 5432
+              protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  ports:
+    - port: 5432
+      protocol: TCP
+  selector:
+    service: db
