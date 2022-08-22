@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "kubernetes://schema/v1%40service": "file:///Users/seochaeun/kube_dir/test-vote.yaml"
+    }
+}
