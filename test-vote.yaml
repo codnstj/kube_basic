@@ -1,39 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: worker
+  name: vote
 spec:
   selector:
     matchLabels:
       service: vote
   template:
-    metatdata:
-      labels: vote
-spec:
-  containers:
-    - name: vote 
-      image: ghcr.io/subicura/voting/worker:latest
-      env:
-        - name: REDIS_HOST
-          value: "redis"
-        - name: REDIS_PORT
-          value: "6379"
-      livenessProbe:
-        httpGet:
-          path: /
-          port: 80
-      readinessProbe:
-        httpGet:
-          path: /
-          port: 80
-      ports:
-        - containerPort: 80
-          protocol: TCP
+    metadata:
+      labels:
+        service: vote
+    spec:
+      containers:
+        - name: vote
+          image: ghcr.io/subicura/voting/vote
+          env:
+            - name: REDIS_HOST
+              value: "redis"
+            - name: REDIS_PORT
+              value: "6379"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+          ports:
+            - containerPort: 80
+              protocol: TCP
 
 ---
-apiVersion: v1 
+apiVersion: v1
 kind: Service
-metatdata:
+metadata:
   name: vote
 spec:
   type: NodePort
@@ -53,27 +54,27 @@ spec:
   selector:
     matchLabels:
       service: result
-    template:
-      metadata:
-        labels:
-          service: result
-      spec:
-        containers:
-          - name: result
-            image: ghcr.io/subicura/voting/result
-            env:
-              - name: POSTGRES_HOST
-                value: "db"
-              - name: POSTGRES_PORT
-                value: "5432"
+  template:
+    metadata:
+      labels:
+        service: result
+    spec:
+      containers:
+        - name: result
+          image: ghcr.io/subicura/voting/result
+          env:
+            - name: POSTGRES_HOST
+              value: "db"
+            - name: POSTGRES_PORT
+              value: "5432"
           livenessProbe:
             httpGet:
               path: /
               port: 80
           readinessProbe:
             httpGet:
-              path: / 
-              ports: 80
+              path: /
+              port: 80
           ports:
             - containerPort: 80
               protocol: TCP
@@ -101,10 +102,37 @@ spec:
   selector:
     matchLabels:
       service: worker
-  templete:
+  template:
     metadata:
       labels:
         service: worker
+    spec:
+      containers:
+        - name: worker
+          image: ghcr.io/subicura/voting/worker
+          env:
+            - name: REDIS_HOST
+              value: "redis"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: POSTGRES_HOST
+              value: "db"
+            - name: POSTGRES_PORT
+              value: "5432"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  selector:
+    matchLabels:
+      service: redis
+  template:
+    metadata:
+      labels:
+        service: redis
     spec:
       containers:
         - name: redis
@@ -131,23 +159,23 @@ kind: Deployment
 metadata:
   name: db
 spec:
-  selector: 
+  selector:
     matchLabels:
       service: db
   template:
-    meatadata:
+    metadata:
       labels:
         service: db
     spec:
       containers:
         - name: db
-          image: postgre:9.4
-          env: 
-            - name: POSTGRE_USER
+          image: postgres:9.4
+          env:
+            - name: POSTGRES_USER
               value: "postgres"
             - name: POSTGRES_PASSWORD
               value: "postgres"
-          ports: 
+          ports:
             - containerPort: 5432
               protocol: TCP
 
