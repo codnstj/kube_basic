@@ -13,14 +13,14 @@ spec:
               service:
                 name: echo-v1
                 port:
-                  number: 30000
+                  number: 3000
 
 ---
 apiVersion: apps/v1
-kind: Deployment 
+kind: Deployment
 metadata:
   name: echo-v1
-spec: 
+spec:
   replicas: 3
   selector:
     matchLabels:
@@ -28,8 +28,8 @@ spec:
       tier: app
       version: v1
   template:
-    meatadata:
-      labels: 
+    metadata:
+      labels:
         app: echo
         tier: app
         version: v1
@@ -46,10 +46,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name:  echo-v1
+  name: echo-v1
 spec:
   ports:
-    - port:  3000
+    - port: 3000
       protocol: TCP
   selector:
     app: echo
