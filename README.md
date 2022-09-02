@@ -180,3 +180,15 @@
 
 - 하나의 클러스터 에서 여러가지 서비스를 운영한다면 외부연결할시  NodePort 를 이용하면 서비스 개수만큼 포트를 오픈하고 사용자에게 어떤 포트인지 알려줘야합니다.
 
+- minikube ingess 활성화 시키기
+	```shell
+	minikube addons enable ingress 
+
+	#ingress 컨트롤러 확인할
+	kubectl -n ingress-nginx get pod
+	```
+- ingress 생성 흐름
+	
+	동적방식을 보면 YAML로 만든 INGRESS 설정을 단순히 nginx 설정으로 바꾸는 걸 알 수 있습니다. 이러한 과정을 수동으로 하지 않고 Ingress Controller가 하는 것 뿐입니다.
+
+	Ingress는 도메인, 경로만 연동하는 것이 아니라 요청 timeout, 요청 max size 등 다양한 프록시 서버 설정을 할 수 있습니다.
